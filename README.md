@@ -140,6 +140,8 @@ Choose from the list of available configurations:
 
  * **default** A default configuration
 
+ * **drupal** The configuration for a Drupal module
+
  * **magento** The configuration for a Magento application
 
  * **sf20**    The configuration for the Symfony 2.0 branch
