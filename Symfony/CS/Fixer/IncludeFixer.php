@@ -12,6 +12,7 @@
 namespace Symfony\CS\Fixer;
 
 use Symfony\CS\FixerInterface;
+use Symfony\CS\ConfigInterface;
 
 /**
  * @author Саша Стаменковић <umpirsky@gmail.com>
@@ -62,9 +63,9 @@ class IncludeFixer implements FixerInterface
     /**
      * {@inheritdoc}
      */
-    public function supports(\SplFileInfo $file)
+    public function supports(\SplFileInfo $file, ConfigInterface $config)
     {
-        return 'php' == pathinfo($file->getFilename(), PATHINFO_EXTENSION);
+        return 'php' == $config->getFileType($file);
     }
 
     /**

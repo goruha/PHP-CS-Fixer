@@ -12,6 +12,7 @@
 namespace Symfony\CS\Fixer;
 
 use Symfony\CS\FixerInterface;
+use Symfony\CS\ConfigInterface;
 
 /**
  * @author Christophe Coevoet <stof@notk.org>
@@ -70,9 +71,9 @@ REGEX;
     /**
      * {@inheritdoc}
      */
-    public function supports(\SplFileInfo $file)
+    public function supports(\SplFileInfo $file, ConfigInterface $config)
     {
-        return 'php' == pathinfo($file->getFilename(), PATHINFO_EXTENSION);
+        return 'php' == $config->getFileType($file);
     }
 
     public function getName()

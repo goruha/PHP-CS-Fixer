@@ -79,7 +79,7 @@ class Fixer
                 continue;
             }
 
-            if ($appliedFixers = $this->fixFile($file, $fixers, $dryRun)) {
+            if ($appliedFixers = $this->fixFile($file, $fixers, $dryRun, $config)) {
                 if ($file instanceof FinderSplFileInfo) {
                     $changed[$file->getRelativePathname()] = $appliedFixers;
                 } else {
@@ -91,13 +91,13 @@ class Fixer
         return $changed;
     }
 
-    public function fixFile(\SplFileInfo $file, array $fixers, $dryRun)
+    public function fixFile(\SplFileInfo $file, array $fixers, $dryRun, ConfigInterface $config)
     {
         $new = $old = file_get_contents($file->getRealpath());
         $appliedFixers = array();
 
         foreach ($fixers as $fixer) {
-            if (!$fixer->supports($file)) {
+            if (!$fixer->supports($file, $config)) {
                 continue;
             }
 

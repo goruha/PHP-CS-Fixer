@@ -87,4 +87,9 @@ class Config implements ConfigInterface
     {
         return $this->description;
     }
+
+    public function getFileType(\SplFileInfo $file)
+    {
+        return pathinfo($file->getFilename(), PATHINFO_EXTENSION);
+    }
 }

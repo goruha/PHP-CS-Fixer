@@ -15,26 +15,26 @@ use Symfony\CS\FixerInterface;
 use Symfony\CS\ConfigInterface;
 
 /**
- * @author Fabien Potencier <fabien@symfony.com>
+ * @author Fabien Potencier <fabien@symfony.com>, Peter Drake <pdrake@gmail.com>
  */
-class ElseifFixer implements FixerInterface
+class DrupalIndentationFixer implements FixerInterface
 {
     public function fix(\SplFileInfo $file, $content)
     {
-        // [Structure] elseif, not else if
-        return str_replace('} else if (', '} elseif (', $content);
+        // [Structure] Indentation is done by steps of four spaces (tabs are never allowed)
+        return preg_replace_callback('/^([ \t]+)/m', function ($matches) use ($content) {
+            return str_replace("\t", '    ', $matches[0]);
+        }, $content);
     }
 
     public function getLevel()
     {
-        // defined in PSR2 ¶5.1
-        return FixerInterface::PSR2_LEVEL;
+        return FALSE;
     }
 
     public function getPriority()
     {
-        // should be run after ControlSpacesFixer
-        return -20;
+        return 50;
     }
 
     public function supports(\SplFileInfo $file, ConfigInterface $config)
@@ -44,11 +44,11 @@ class ElseifFixer implements FixerInterface
 
     public function getName()
     {
-        return 'elseif';
+        return 'drupal_indentation';
     }
 
     public function getDescription()
     {
-        return 'The keyword elseif should be used instead of else if so that all control keywords looks like single words.';
+        return 'Code must use 2 spaces for indenting, not tabs.';
     }
 }
